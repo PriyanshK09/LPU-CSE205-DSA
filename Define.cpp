@@ -106,6 +106,11 @@ void Insert_element()
         a[pos-1]=ele;
         size++;
         cout<<"Element inserted successfully"<<endl;
+        cout<<"Array elements are: ";
+        for (int i=0; i<size; i++)
+        {
+            cout<<a[i]<<" ";
+        }
     }
 }
 
