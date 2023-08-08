@@ -8,6 +8,7 @@ void create_array();
 void Trav_forward();
 void Trav_backward();
 void Search_element();
+void Insert_element();
 
 void create_array()
 {
@@ -84,11 +85,36 @@ void Search_element()
     cout<<"Element not found"<<endl;
 }
 
+void Insert_element()
+{
+    int ele, pos;
+    cout<<"Enter the element to be inserted: ";
+    cin>>ele;
+    cout<<"Enter the position of the element: ";
+    cin>>pos;
+    if (pos>size+1)
+    {
+        cout<<"Invalid position"<<endl;
+        return;
+    }
+    else
+    {
+        for (int i=size-1; i>=pos-1; i--)
+        {
+            a[i+1]=a[i];
+        }
+        a[pos-1]=ele;
+        size++;
+        cout<<"Element inserted successfully"<<endl;
+    }
+}
+
 int main()
 {
     create_array();
     Trav_forward();
     Trav_backward();
     Search_element();
+    Insert_element();
     return 0;
 }
