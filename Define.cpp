@@ -9,6 +9,7 @@ void Trav_forward();
 void Trav_backward();
 void Search_element();
 void Insert_element();
+void Delete_element();
 
 void create_array()
 {
@@ -114,6 +115,32 @@ void Insert_element()
     }
 }
 
+void Delete_element()
+{
+    int pos;
+    cout<<"Enter the position of the element to be deleted: ";
+    cin>>pos;
+    if (pos>size)
+    {
+        cout<<"Invalid position"<<endl;
+        return;
+    }
+    else
+    {
+        for (int i=pos-1; i<size-1; i++)
+        {
+            a[i]=a[i+1];
+        }
+        size--;
+        cout<<"Element deleted successfully"<<endl;
+        cout<<"Array elements are: ";
+        for (int i=0; i<size; i++)
+        {
+            cout<<a[i]<<" ";
+        }
+    }
+}
+
 int main()
 {
     create_array();
@@ -121,5 +148,6 @@ int main()
     Trav_backward();
     Search_element();
     Insert_element();
+    Delete_element();
     return 0;
 }
