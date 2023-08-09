@@ -10,6 +10,8 @@ void Trav_backward();
 void Search_element();
 void Insert_element();
 void Delete_element();
+void Insert_atlast();
+void Insert_atfirst();
 
 void create_array()
 {
@@ -118,7 +120,7 @@ void Insert_element()
 void Delete_element()
 {
     int pos;
-    cout<<"Enter the position of the element to be deleted: ";
+    cout<<"\n Enter the position of the element to be deleted: ";
     cin>>pos;
     if (pos>size)
     {
@@ -141,6 +143,40 @@ void Delete_element()
     }
 }
 
+void Insert_atlast()
+{
+    int ele;
+    cout<<"\n Enter the element to be inserted: ";
+    cin>>ele;
+    a[size]=ele;
+    size++;
+    cout<<"Element inserted successfully"<<endl;
+    cout<<"Array elements are: ";
+    for (int i=0; i<size; i++)
+    {
+        cout<<a[i]<<" ";
+    }
+}
+
+void Insert_atfirst()
+{
+    int ele;
+    cout<<"\n Enter the element to be inserted: ";
+    cin>>ele;
+    for (int i=size-1; i>=0; i--)
+    {
+        a[i+1]=a[i];
+    }
+    a[0]=ele;
+    size++;
+    cout<<"Element inserted successfully"<<endl;
+    cout<<"Array elements are: ";
+    for (int i=0; i<size; i++)
+    {
+        cout<<a[i]<<" ";
+    }
+}
+
 int main()
 {
     create_array();
@@ -149,5 +185,7 @@ int main()
     Search_element();
     Insert_element();
     Delete_element();
+    Insert_atlast();
+    Insert_atfirst();
     return 0;
 }
