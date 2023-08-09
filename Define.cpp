@@ -12,6 +12,9 @@ void Insert_element();
 void Delete_element();
 void Insert_atlast();
 void Insert_atfirst();
+void Delete_atlast();
+void Delete_atfirst();
+void Delete_atpos();
 
 void create_array()
 {
@@ -177,6 +180,58 @@ void Insert_atfirst()
     }
 }
 
+void Delete_atlast()
+{
+    size--;
+    cout<<"Element deleted successfully"<<endl;
+    cout<<"Array elements are: ";
+    for (int i=0; i<size; i++)
+    {
+        cout<<a[i]<<" ";
+    }
+}
+
+void Delete_atfirst()
+{
+    for (int i=0; i<size-1; i++)
+    {
+        a[i]=a[i+1];
+    }
+    size--;
+    cout<<"Element deleted successfully"<<endl;
+    cout<<"Array elements are: ";
+    for (int i=0; i<size; i++)
+    {
+        cout<<a[i]<<" ";
+    }
+}
+
+void Delete_atpos()
+{
+    int pos;
+    cout<<"\n Enter the position of the element to be deleted: ";
+    cin>>pos;
+    if (pos>size)
+    {
+        cout<<"Invalid position"<<endl;
+        return;
+    }
+    else
+    {
+        for (int i=pos-1; i<size-1; i++)
+        {
+            a[i]=a[i+1];
+        }
+        size--;
+        cout<<"Element deleted successfully"<<endl;
+        cout<<"Array elements are: ";
+        for (int i=0; i<size; i++)
+        {
+            cout<<a[i]<<" ";
+        }
+    }
+}
+
 int main()
 {
     create_array();
@@ -187,5 +242,8 @@ int main()
     Delete_element();
     Insert_atlast();
     Insert_atfirst();
+    Delete_atlast();
+    Delete_atfirst();
+    Delete_atpos();
     return 0;
 }
