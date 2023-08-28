@@ -1,58 +1,68 @@
 #include<iostream>
 using namespace std;
-class node{
+
+class node
+{
 public:
 int data;
 node *link;
 };
-class linkedlist{
+
+class LinkedList
+{
 public:
 node *head;
-linkedlist(){
-head=NULL;
+LinkedList()
+{
+head = NULL;
 }
+
 void create();
 void display();
 };
-void linkedlist::create(){
+
+void LinkedList::create()
+{
 int n;
-node *temp=new node;
-cout<<"Enter the data insert into node: ";
+node *temp = new node;
+cout<<"Enter the data to insert into node: ";
 cin>>n;
-temp->data=n;
-temp->link=NULL;
-if(head==NULL){
-head=temp;
+temp->data = n;
+temp->link = NULL;
+if(head==NULL)
+{
+head = temp;
 }
-else{
-node *t=head;
-while(t->link!=NULL){
+else
+{
+node *t = head;
+while(t->link!=NULL)
+{
+t = t->link;
+}
+t->link = temp;
+}
+}
+
+void LinkedList::display()
+{
+node *t = head;
+while(t!=NULL)
+{
+cout<<t->data<<"==>";
 t=t->link;
 }
-t->link=temp;
+cout<<"NULL";
 }
-}
-void linkedlist::display(){
-node *t=head;
-while(t!=NULL){
-if(t->link!=NULL){
-cout<<t->data<<" ==> ";
-}
-else{
-cout<<t->data;
-}
-t=t->link;
-}
-}
-int main(){
-linkedlist l1;
+
+int main()
+{
+LinkedList l;
 int n;
-cout<<"Enter the number of elements you want to enter: ";
+cout<<"Enter the number of nodes to insert: ";
 cin>>n;
-for(int i=0;i<n;i++){
-l1.create();
-}
-cout<<"Your created list is : ";
-l1.display();
+for(int i=0;i<n;i++)
+l.create();
+l.display();
 return 0;
 }
