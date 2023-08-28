@@ -1,4 +1,8 @@
-#include <iostream>
+// Local Variables are created in stack and are destroyed when the function is over
+// Dynamic Variables are created in heap and are destroyed when the program is over
+
+
+#include<iostream>
 using namespace std;
 class node
 {
@@ -16,14 +20,14 @@ class Linkedlist
     }
     void create();
     void display();
+
 };
 void Linkedlist::create()
 {
-    node *temp,*ptr;
     int n;
+    node *temp=new node;
     cout<<"Enter the data to insert into node: ";
     cin>>n;
-    temp=new node;
     temp->data=n;
     temp->link=NULL;
     if(head==NULL)
@@ -32,28 +36,30 @@ void Linkedlist::create()
     }
     else
     {
-        ptr=head;
-        while(ptr->link!=NULL)
+        node *t=head;
+        while(t->link!=NULL)
         {
-            ptr=ptr->link;
+            t=t->link;
         }
-        ptr->link=temp;
+        t->link=temp;
     }
-}
+
+};
 void Linkedlist::display()
 {
-    node *ptr;
-    ptr=head;
-    while(ptr!=NULL)
+    node *t=head;
+    while(t!=NULL)
     {
-        cout<<ptr->data;
-        ptr=ptr->link;
+        cout<<t->data<<"=>";
+        t=t->link;
     }
-}
+    cout<<"NULL";
+};
 int main()
 {
     Linkedlist l;
     l.create();
-    l.display();
+    l.create();
+    l.display(); // 1=>2=>3=>NULL : Expected Output
     return 0;
 }
