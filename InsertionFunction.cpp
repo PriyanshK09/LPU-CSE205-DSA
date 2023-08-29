@@ -1,6 +1,14 @@
 #include <iostream>
 using namespace std;
 
+
+//  NODE CLASS: This represents each element in the linked list. It has two important things inside it:
+//  DATA: This holds the actual information you want to store, like a number or a word.
+//  LINK: This is like a pointer that points to the next element in the list.
+
+//  LinkedList Class: This is like the manager of the linked list. It has functions that allow you to interact with the list.
+
+
 class node
 {
 public:
