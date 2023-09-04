@@ -1,265 +1,236 @@
-* Circular Linked List*
-#include<iostream>
-#include<stdlib.h>
+#include <iostream>
 using namespace std;
-class node
-{
-	public:
+
+class Node {
+public:
     int data;
-    node *next;
+    Node* next;
+
+    Node(int value) : data(value), next(nullptr) {}
 };
 
-class CLL
-{
-	public:
-	node *head, *temp;
-	CLL()
-	{
-		head=NULL;
-		temp=NULL;
-	}
-	void createCLL();
-	void display();
-	void insertAtBeginning();
-	void insertAtEnd();
-	int getLength();
-	void insertAtPosition();
-	void deleteFromBeginning();
-	void deleteFromEnd();
-	void deleteFromPosition();
-	void reverse();
-	
+class CircularLinkedList {
+public:
+    Node* head;
+
+    CircularLinkedList() : head(nullptr) {}
+
+    void createCLL();
+    void display();
+    void insertAtBeginning();
+    void insertAtEnd();
+    int getLength();
+    void insertAtPosition();
+    void deleteFromBeginning();
+    void deleteFromEnd();
+    void deleteFromPosition();
+    void reverse();
 };
-void CLL::createCLL()
-	{
-    	node *newnode=new node;
-    	cout<<"Enter Data :";
-    	cin>>newnode->data;
-    	newnode->next=NULL;
 
-	    if(head==NULL){
-    	    head=newnode;
-        	head->next = newnode;
-    	}
-    	else{
-        	newnode->next = head->next;
-        	head->next = newnode;
-        	head = newnode;
-    	}
- }
+void CircularLinkedList::createCLL() {
+    int value;
+    cout << "Enter Data: ";
+    cin >> value;
 
+    Node* newNode = new Node(value);
 
-void CLL::insertAtBeginning()
-{
-    node *newnode=new node;
-    cout<<"Enter Data ";
-    cin>>newnode->data;
-    newnode->next=NULL;
-
-    if(head==NULL){
-        head = newnode;
-        head->next = newnode;
-    }
-    else{
-        newnode->next = head->next;
-        head->next = newnode;
+    if (!head) {
+        head = newNode;
+        head->next = head;
+    } else {
+        newNode->next = head->next;
+        head->next = newNode;
+        head = newNode;
     }
 }
 
-void CLL::insertAtEnd()
-{
-    node *newnode=new node;
-    
-    cout<<"Enter Data ";
-    cin>>newnode->data;
+void CircularLinkedList::insertAtBeginning() {
+    int value;
+    cout << "Enter Data: ";
+    cin >> value;
 
-    newnode->next = head->next;
-    head->next = newnode;
-    head = newnode;
+    Node* newNode = new Node(value);
+
+    if (!head) {
+        head = newNode;
+        head->next = head;
+    } else {
+        newNode->next = head->next;
+        head->next = newNode;
+    }
 }
 
-int CLL::getLength()
-{
-    int count=0;
+void CircularLinkedList::insertAtEnd() {
+    int value;
+    cout << "Enter Data: ";
+    cin >> value;
 
-    temp = head->next;
-    while(temp->next != head->next)
-    {
+    Node* newNode = new Node(value);
+
+    if (!head) {
+        head = newNode;
+        head->next = head;
+    } else {
+        newNode->next = head->next;
+        head->next = newNode;
+        head = newNode;
+    }
+}
+
+int CircularLinkedList::getLength() {
+    if (!head)
+        return 0;
+
+    int count = 1;
+    Node* temp = head->next;
+    while (temp != head) {
         count++;
         temp = temp->next;
     }
-    return count+1;
+    return count;
 }
 
-void CLL::insertAtPosition()
-{
-    int i=1, position;
-    node *newnode=new node;
-    //newnode = (struct node *)malloc(sizeof(newnode));
+void CircularLinkedList::insertAtPosition() {
+    int position, value;
+    cout << "Enter Position: ";
+    cin >> position;
+    int length = getLength();
 
-    cout<<"Enter Position ";
-    cin>>position;
-
-    int l = getLength();
-
-    if(position<1 || position> l+1){
-        printf("INVALID POSITION");
-    }
-    else if(position == 1){
+    if (position < 1 || position > length + 1) {
+        cout << "INVALID POSITION" << endl;
+    } else if (position == 1) {
         insertAtBeginning();
-    }
-    else if(position == l+1){
+    } else if (position == length + 1) {
         insertAtEnd();
-    }
-    else{
-        newnode = new node;
-        cout<<"Enter Data ";
-        cin>>newnode->data;
-        newnode->next=NULL;
+    } else {
+        cout << "Enter Data: ";
+        cin >> value;
+        Node* newNode = new Node(value);
 
-        temp = head->next;
-        while(i<position-1){
+        Node* temp = head->next;
+        for (int i = 1; i < position - 1; i++) {
             temp = temp->next;
-            i++;
         }
-        newnode->next = temp->next;
-        temp->next = newnode;
+
+        newNode->next = temp->next;
+        temp->next = newNode;
     }
 }
 
-void CLL::deleteFromBeginning()
-{
-    temp = head->next;
-    if(head==0){
-        cout<<"LIST IS EMPTY!!!\N";
+void CircularLinkedList::deleteFromBeginning() {
+    if (!head) {
+        cout << "LIST IS EMPTY!!!" << endl;
+        return;
     }
-    else if(temp->next==temp){
-        head=0;
-        delete temp;
-    }
-    else{
+
+    if (head->next == head) {
+        delete head;
+        head = nullptr;
+    } else {
+        Node* temp = head->next;
         head->next = temp->next;
         delete temp;
     }
 }
 
-void CLL::deleteFromEnd()
-{
-    node *current, *previous;
-    current = head->next;
+void CircularLinkedList::deleteFromEnd() {
+    if (!head) {
+        cout << "LIST IS EMPTY!!!" << endl;
+        return;
+    }
 
-    if(head==0){
-        cout<<"LIST IS EMPTY\n";
-    }
-    else if(current->next == current){
-        head = 0;
-        delete current;
-    }
-    else{
-        while(current->next != head->next){
-            previous = current;
-            current = current->next;
+    if (head->next == head) {
+        delete head;
+        head = nullptr;
+    } else {
+        Node* temp = head->next;
+        while (temp->next != head) {
+            temp = temp->next;
         }
-        previous->next = current->next;
-        head = previous;
-        delete current;
+        temp->next = head->next;
+        delete head;
+        head = temp;
     }
 }
 
-void CLL::deleteFromPosition()
-{
-    node *current, *previous;
-    int position, i=1;
+void CircularLinkedList::deleteFromPosition() {
+    int position;
+    cout << "Enter Position: ";
+    cin >> position;
+    int length = getLength();
 
-    cout<<"Enter Position ";
-    cin>>position;
-
-    int l = getLength();
-
-    if(position<1 || position>l){
-        cout<<"INVALID POSITION!!!\n";
-    }
-    else if(position==1){
+    if (position < 1 || position > length) {
+        cout << "INVALID POSITION!!!" << endl;
+    } else if (position == 1) {
         deleteFromBeginning();
-    }
-    else if(position==l){
+    } else if (position == length) {
         deleteFromEnd();
-    }
-    else{
-        current = head->next;
-        while(i<position){
-            previous = current;
-            current = current->next;
-            i++;
+    } else {
+        Node* temp = head->next;
+        for (int i = 1; i < position - 1; i++) {
+            temp = temp->next;
         }
-        previous->next = current->next;
-
-        delete current;
+        Node* toDelete = temp->next;
+        temp->next = toDelete->next;
+        delete toDelete;
     }
 }
 
-void CLL::reverse()
-{
-    node *current, *prev, *nextnode;
-
-    current = head->next;
-    nextnode = current->next;
-
-    if(head == 0){
-        cout<<"LIST IS EMPTY!!!\n";
+void CircularLinkedList::reverse() {
+    if (!head) {
+        cout << "LIST IS EMPTY!!!" << endl;
+        return;
     }
-    while(current != head)
-    {
-        prev = current;
-        current = nextnode;
-        nextnode = current->next;
+
+    Node* current = head;
+    Node* prev = nullptr;
+    Node* nextNode = head->next;
+
+    do {
+        nextNode = current->next;
         current->next = prev;
+        prev = current;
+        current = nextNode;
+    } while (current != head);
+
+    head = prev;
+}
+
+void CircularLinkedList::display() {
+    if (!head) {
+        cout << "LIST IS EMPTY" << endl;
+    } else {
+        Node* temp = head->next;
+        do {
+            cout << temp->data << " ==> ";
+            temp = temp->next;
+        } while (temp != head);
+        cout << temp->data << endl;
     }
-    nextnode->next = head;
-    head = nextnode;
 }
 
-
-void CLL::display()
-{
-   if(head==0)
-   {
-       printf("LIST is EMPTY\n");
-   }
-   else{
-    temp = head->next;
-   }
-
-   while(temp->next != head->next)
-   {
-       cout<<temp->data<<"==>";
-       temp = temp->next;
-   }
-   cout<<temp->data;
-}
-
-int main()
-{
- 	CLL c;
+int main() {
+    CircularLinkedList c;
     int n;
-    cout<<"No of node: ";
-    cin>>n;
-    for(int i=0;i<n;i++)
-	 	c.createCLL();
+    cout << "No of nodes: ";
+    cin >> n;
 
- 	c.display();
- 	c.insertAtBeginning();
- 	c.insertAtEnd();
- 	cout<<"length :"<<c.getLength();
- 	c.insertAtPosition();
- 	c.display();
- 	cout<<endl;
- 	c.reverse();
- 	c.display();
-	 c.deleteFromBeginning();
- 	c.deleteFromEnd();
- 	c.deleteFromPosition();
- 	c.display();
- 	return 0;
+    for (int i = 0; i < n; i++)
+        c.createCLL();
 
+    c.display();
+    c.insertAtBeginning();
+    c.insertAtEnd();
+    cout << "Length: " << c.getLength() << endl;
+    c.insertAtPosition();
+    c.display();
+    cout << endl;
+    c.reverse();
+    c.display();
+    c.deleteFromBeginning();
+    c.deleteFromEnd();
+    c.deleteFromPosition();
+    c.display();
+
+    return 0;
 }

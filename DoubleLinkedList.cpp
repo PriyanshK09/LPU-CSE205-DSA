@@ -43,6 +43,9 @@ public:
     void insertatEnd();
     void deleteNode();
     void deleteEnd();
+    void position();
+    void deleteatPosition();
+    void search();
 };
 
 void DoubleLinkedList::create()
@@ -87,9 +90,9 @@ void DoubleLinkedList::display()
 void DoubleLinkedList::reverse()
 {
     node *current = first;
-    node *temp = NULL;
+    node *temp = nullptr;
 
-    while (current != NULL)
+    while (current != nullptr)
     {
         temp = current->prev;
         current->prev = current->next;
@@ -97,9 +100,15 @@ void DoubleLinkedList::reverse()
         current = current->prev;
     }
 
-    if (temp != NULL)
+    if (temp != nullptr)
     {
         first = temp->prev;
+    }
+    else
+    {
+        // If temp is nullptr, it means the list was empty or had only one element.
+        // In such cases, 'first' should be updated to 'last'.
+        first = last;
     }
 }
 
@@ -221,6 +230,93 @@ void DoubleLinkedList::deleteEnd()
     delete current;
 }
 
+void DoubleLinkedList::position()
+{
+    int pos;
+    cout << "Enter the position: ";
+    cin >> pos;
+
+    node *current = first;
+    int count = 1;
+
+    while (current != NULL)
+    {
+        if (count == pos)
+        {
+            cout << "Data at position " << pos << " is " << current->data << endl;
+            return;
+        }
+        count++;
+        current = current->next;
+    }
+
+    cout << "Invalid position." << endl;
+}
+
+void DoubleLinkedList::deleteatPosition()
+{
+    int pos;
+    cout << "Enter the position: ";
+    cin >> pos;
+
+    node *current = first;
+    int count = 1;
+
+    while (current != NULL)
+    {
+        if (count == pos)
+        {
+            if (current->prev != NULL)
+            {
+                current->prev->next = current->next;
+            }
+            else
+            {
+                first = current->next;
+            }
+
+            if (current->next != NULL)
+            {
+                current->next->prev = current->prev;
+            }
+            else
+            {
+                last = current->prev;
+            }
+
+            delete current;
+            cout << "Node at position " << pos << " deleted successfully." << endl;
+            return;
+        }
+        count++;
+        current = current->next;
+    }
+
+    cout << "Invalid position." << endl;
+}
+
+void DoubleLinkedList::search()
+{
+    int targetData;
+    cout << "Enter the data to search: ";
+    cin >> targetData;
+
+    node *current = first;
+    int count = 1;
+
+    while (current != NULL)
+    {
+        if (current->data == targetData)
+        {
+            cout << "Data found at position " << count << endl;
+            return;
+        }
+        count++;
+        current = current->next;
+    }
+
+    cout << "Data not found in the list." << endl;
+}
 
 
 int main()
@@ -240,6 +336,9 @@ int main()
         cout << "7. Delete a node\n";
         cout << "8. Exit\n";
         cout << "9. Delete from end\n";
+        cout << "10. Position\n";
+        cout << "11. Delete at position\n";
+        cout << "12. Search\n";
         cout << "Enter your choice: ";
         cin >> choice;
 
@@ -273,6 +372,15 @@ int main()
             break;
         case 9:
             list.deleteEnd();
+            break;
+        case 10:
+            list.position();
+            break;
+        case 11:
+            list.deleteatPosition();
+            break;
+        case 12:
+            list.search();
             break;
         default:
             cout << "Invalid choice!\n";
