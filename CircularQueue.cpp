@@ -97,11 +97,14 @@ int main() {
     }
     cout << endl;
 
-    cout << "Enqueueing more elements: ";
-    for (int i = 6; i <= 8; i++) {
-        q1.enqueue(i * 10);
-    }
+    q1.enqueue(44);
+    q1.enqueue(54);
+    q1.enqueue(64);
+    q1.enqueue(74);
+    q1.enqueue(84);
     q1.display();
+    
+    
 
     return 0;
 }
