@@ -1,12 +1,14 @@
 #include <iostream>
-#define MAX 5
 using namespace std;
+
+#define MAX 5
 
 class CircularQueue {
 private:
     int front;
     int rear;
     int arr[MAX];
+
 public:
     CircularQueue() {
         front = -1;
@@ -17,39 +19,41 @@ public:
     }
 
     bool isEmpty() {
-        if (front == -1 && rear == -1)
-            return true;
-        else
-            return false;
+        return (front == -1 && rear == -1);
     }
 
     bool isFull() {
-        if ((rear + 1) % MAX == front)
-            return true;
-        else
-            return false;
+        return ((rear + 1) % MAX == front);
     }
 
     int count() {
-        return (rear + MAX - front) % MAX + 1;
+        if (isEmpty())
+            return 0;
+        return (rear >= front) ? (rear - front + 1) : (MAX - (front - rear) + 1);
     }
 
     void display() {
-        cout << "All values in the Queue are: " << endl;
-        for (int i = 0; i < MAX; i++) {
-            cout << arr[i] << "  ";
+        if (isEmpty()) {
+            cout << "Queue is Empty" << endl;
+            return;
         }
+
+        int i = front;
+        do {
+            cout << arr[i] << " ";
+            i = (i + 1) % MAX;
+        } while (i != (rear + 1) % MAX);
+
+        cout << endl;
     }
 
-    // enqueue = insert
     void enqueue(int val) {
         if (isFull()) {
             cout << "Queue is Full" << endl;
             return;
         }
         else if (isEmpty()) {
-            rear = 0;
-            front = 0;
+            rear = front = 0;
             arr[rear] = val;
         }
         else {
@@ -58,7 +62,6 @@ public:
         }
     }
 
-    // dequeue = delete
     int dequeue() {
         int x = 0;
         if (isEmpty()) {
@@ -67,12 +70,10 @@ public:
         }
         else if (rear == front) {
             x = arr[rear];
-            rear = -1;
-            front = -1;
+            rear = front = -1;
             return x;
         }
         else {
-            cout << "Front Value : " << front << endl;
             x = arr[front];
             arr[front] = 0;
             front = (front + 1) % MAX;
@@ -81,60 +82,26 @@ public:
     }
 };
 
-int main()
-{
-    CircularQueue cq;
-    int option, value;
+int main() {
+    CircularQueue q1;
 
-    do {
-        cout << "\n\nWhat operation do you want to perform? Select Option number." << endl;
-        cout << "1. Enqueue()" << endl;
-        cout << "2. Dequeue()" << endl;
-        cout << "3. isEmpty()" << endl;
-        cout << "4. isFull()" << endl;
-        cout << "5. count()" << endl;
-        cout << "6. display()" << endl;
-        cout << "7. Exit" << endl;
+    cout << "Enqueueing elements: ";
+    for (int i = 1; i <= 5; i++) {
+        q1.enqueue(i * 10);
+    }
+    q1.display();
 
-        cin >> option;
+    cout << "Dequeuing elements: ";
+    for (int i = 0; i < 3; i++) {
+        cout << q1.dequeue() << " ";
+    }
+    cout << endl;
 
-        switch (option) {
-        case 0:
-            break;
-        case 1:
-            cout << "Enqueue Operation \nEnter an item to Enqueue in the Queue" << endl;
-            cin >> value;
-            cq.enqueue(value);
-            break;
-        case 2:
-            cout << "Dequeue Operation \nDequeued Value : " << cq.dequeue() << endl;
-            break;
-        case 3:
-            if (cq.isEmpty())
-                cout << "Queue is Empty" << endl;
-            else
-                cout << "Queue is not Empty" << endl;
-            break;
-        case 4:
-            if (cq.isFull())
-                cout << "Queue is Full" << endl;
-            else
-                cout << "Queue is not Full" << endl;
-            break;
-        case 5:
-            cout << "Count Operation \nCount of items in Queue : " << cq.count() << endl;
-            break;
-        case 6:
-            cout << "Display Function Called - " << endl;
-            cq.display();
-            break;
-        case 7:
-        // exit
-            break;
-            return 0;
-        default:
-            cout << "Enter Proper Option number " << endl;
-        }
+    cout << "Enqueueing more elements: ";
+    for (int i = 6; i <= 8; i++) {
+        q1.enqueue(i * 10);
+    }
+    q1.display();
 
-    } while (option != 7);
+    return 0;
 }
