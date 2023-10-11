@@ -1,4 +1,5 @@
-#include<iostream>
+// You are using GCC
+#include <iostream>
 using namespace std;
 
 class node
@@ -14,18 +15,72 @@ node *root;
 class BST
 {
 public:
-
     BST()
     {
         root = NULL;
     }
-
     void insert_Node(int);
     void inorder(node *);
-    node* delete_Node(node*, int);
+    node *deleteNode(node *, int);
+    // node *search(int k); // non recursive
+    // node *search(node *r, int k);
 };
+node *BST::deleteNode(node *rt, int key)
+{
+    if (rt == NULL)
+    {
+        cout << "\nElement not found :" << key << endl;
+        return rt; // NULL
+    }
+    else
+    {
+        if key
+            < rt->data
+                    rt->left = deleteNode(rt->left, key);
+        else if key
+            > rt->data
+                    rt->right = deleteNode(rt->right, key);
+        else
+        {
+            // case 1: no child
+            if (rt->left == NULL)
+            {
+                node *temp = rt->right;
+                delete (rt);
+                return temp;
+            }
+            // case 2: one child
+            else if (rt->right == NULL)
+            {
+                node *temp = rt->left;
+                delete (rt);
+                return temp;
+            }
+            // case 3: two child
+            else
+            {
+                node *temp = rt->right;
+                while (temp->left != NULL)
+                {
+                    temp = temp->left;
+                }
+                rt->data = temp->data;
+                rt->right = deleteNode(rt->right, temp->data);
+            }
+        }
+    }
+}
 
-void BST::insert_Node(int d)
+void BST::inorder(node *p)
+{
+    if (p != NULL)
+    {
+        inorder(p->left);
+        cout << p->data << " ";
+        inorder(p->right);
+    }
+}
+void BST ::insert_Node(int d)
 {
     node *temp = new node;
 
@@ -59,75 +114,23 @@ void BST::insert_Node(int d)
         }
     }
 }
-
-void BST::inorder(node *p)
-{
-    if (p != NULL)
-    {
-        inorder(p->left);
-        cout << p->data << " ";
-        inorder(p->right);
-    }
-}
-
-node* BST::delete_Node(node* root, int key)
-{
-    if (root == NULL)
-        return root;
-
-    if (key < root->data)
-        root->left = delete_Node(root->left, key);
-    else if (key > root->data)
-        root->right = delete_Node(root->right, key);
-    else
-    {
-        if (root->left == NULL)
-        {
-            node* temp = root->right;
-            delete root;
-            return temp;
-        }
-        else if (root->right == NULL)
-        {
-            node* temp = root->left;
-            delete root;
-            return temp;
-        }
-
-        node* temp = root->right;
-        while (temp->left != NULL)
-            temp = temp->left;
-
-        root->data = temp->data;
-        root->right = delete_Node(root->right, temp->data);
-    }
-    return root;
-}
-
 int main()
 {
     BST b;
-    int elements[] = {30, 20, 5, 15, 50, 45, 35, 60, 25, 22, 47, 80, 2};
-    int n = sizeof(elements) / sizeof(elements[0]);
+    node *p;
+    int n;
+    cin >> n;
 
     for (int i = 0; i < n; i++)
     {
-        b.insert_Node(elements[i]);
+        int d;
+        cin >> d;
+        b.insert_Node(d);
     }
-
-    cout << "Inorder Traversal of BST: ";
     b.inorder(root);
-    cout << endl;
-
-    int key_to_delete;
-    cout << "Enter the element to delete: ";
-    cin >> key_to_delete;
-
-    root = b.delete_Node(root, key_to_delete);
-
-    cout << "Inorder Traversal after deletion: ";
+    b.deleteNode(20);
+    cout << "\n After delete the node " << endl;
     b.inorder(root);
-    cout << endl;
 
     return 0;
 }
