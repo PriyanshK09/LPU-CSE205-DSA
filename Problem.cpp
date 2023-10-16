@@ -77,10 +77,20 @@ void BST::insert(int d) {
 
 int main() {
     BST b;
-    b.insert(30);
+    b.insert(50);
     b.insert(40);
     b.insert(60);
-    b.insert(50);
+    b.insert(30);
+    b.insert(45);
+    b.insert(52);
+    b.insert(80);
+    b.insert(75);
+    b.insert(78);
+    b.insert(90);
+    b.insert(51);
+    b.insert(48);
+    b.insert(95);
+    b.insert(20);
 
     cout << "inOrder: " << endl;
     b.inOrder(root);
