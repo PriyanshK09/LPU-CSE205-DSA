@@ -1,42 +1,29 @@
 #include <iostream>
-#include <list>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
 int main() {
-    int N;
-    cin >> N;
+    priority_queue<int> max_heap;
+    vector<int> scores;
+    int score;
 
-    list<int> doublyLinkedList;
-
-    // Insert elements at the end of the doubly linked list
-    for (int i = 0; i < N; i++) {
-        int num;
-        cin >> num;
-        doublyLinkedList.push_back(num);
+    // Input the scores
+    while (cin >> score) {
+        scores.push_back(score);
     }
 
-    int M;
-    cin >> M;
-
-    // Perform deletion operations
-    for (int i = 0; i < M; i++) {
-        int position;
-        cin >> position;
-
-        // Ensure the position is within valid bounds
-        if (position > 0 && position <= doublyLinkedList.size()) {
-            list<int>::iterator deletePos = doublyLinkedList.begin();
-            advance(deletePos, position - 1);
-            doublyLinkedList.erase(deletePos);
-        }
+    // Insert the scores into the max heap
+    for (int i = 0; i < scores.size(); i++) {
+        max_heap.push(scores[i]);
     }
 
-    // Print the elements of the doubly linked list
-    for (const int& value : doublyLinkedList) {
-        cout << value << " ";
+    // Output the scores in max heap order
+    while (!max_heap.empty()) {
+        cout << max_heap.top() << " ";
+        max_heap.pop();
     }
-    cout << endl;
 
     return 0;
 }
